@@ -1,11 +1,20 @@
 import processing.core.PApplet;
 import processing.core.PImage;
+
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
+/**
+ * This class models the PApplet display window of the cs300 spring 2022 p05 Treasure Hunt
+ * adventure style game
+ *
+ * @author tanaynagar
+ * @author gauravchopra
+ * @version 1.0
+ */
 public class TreasureHunt extends PApplet {
   // Declaring data fields
   private PImage backgroundImage; // PImage object which represents the background image
@@ -13,35 +22,43 @@ public class TreasureHunt extends PApplet {
   //todo: do not initialize any of the above "instance" data fields. They will be initialized
   // in the setup() method
 
+
+
+  /**
+   * main method to launch the graphic application
+   *
+   * @param args input argument (unused here)
+   */
   public static void main(String[] args) {
     PApplet.main("TreasureHunt");
     // todo: do not add any other statement to the main method
     // The PApplet.main() method takes a String input parameter which represents
     // the name of your PApplet class.
-  }
+  } // main ends
 
   /**
    * Sets the size of the application display window
    */
-  @Override
-  public void settings() {
+  @Override public void settings() {
     size(800, 600);
-  }
+  } // settings ends
 
   /**
    * Defines initial environment properties, loads background images and fonts , loads the clues,
    * and initializes the instance fields, as the program starts.
    */
-  @Override
-  public void setup() {
+  @Override public void setup() {
 
-    this.focused = true; // Confirms that this graphic display window is "focused," meaning that it
+    this.focused =
+        true; // Confirms that this graphic display window is "focused," meaning that it
     // is active and will accept mouse or keyboard input.
-    this.imageMode(PApplet.CORNERS); // Interprets the x and y position of an image to the position
+    this.imageMode(
+        PApplet.CORNERS); // Interprets the x and y position of an image to the position
     // of its upper-left corner on the screen
     this.getSurface().setTitle("Treasure Hunt"); // Displays the title of the display window
     this.rectMode(PApplet.CORNERS); // Sets the location from which rectangles are drawn.
-    // rectMode(CORNERS) interprets the first two parameters of rect() method as the position of the
+    // rectMode(CORNERS) interprets the first two parameters of rect() method as the position
+    // of the
     // upper left corner, and the third and fourth parameters as the position of the opposite
     // corner.
     // rect() method draws a rectangle to the display window
@@ -55,7 +72,7 @@ public class TreasureHunt extends PApplet {
     Button.setProcessing(this);
 
     initGame();
-  }
+  } // setup ends
 
   /**
    * Initializes the game settings and list of objects
@@ -104,7 +121,7 @@ public class TreasureHunt extends PApplet {
     // Loading Game Settings
     loadGameSettings("clues" + File.separator + "treasureHunt.clues");
 
-  }
+  } // initGame ends
 
   /**
    * Adds a Clickable object, giving its reference, to the list of game objects
@@ -116,15 +133,14 @@ public class TreasureHunt extends PApplet {
     this.gameObjects.add(clickableObject);
     //TODO: get checked by instructor
 
-  }
+  } // add ends
 
   /**
-   * Updates the treasure hunt game display window. Draws the background image, draws all clickable
-   * objects stored in the list of game objects, then removes all the interactive objects which are
-   * no longer active.
+   * Updates the treasure hunt game display window. Draws the background image, draws all
+   * clickable objects stored in the list of game objects, then removes all the interactive
+   * objects which are no longer active.
    */
-  @Override
-  public void draw() {
+  @Override public void draw() {
     //declaring local variables
     int i; //loop control variable
     // TODO
@@ -142,22 +158,23 @@ public class TreasureHunt extends PApplet {
     // 3. traverse the list of gameObjects and remove deactivated interactive objects
     // Traversing through the gameObjects ArrayList using a for loop
     for (i = 0; i < this.gameObjects.size(); i++) {
-      if ((gameObjects.get(i) instanceof InteractiveObject) && !(((InteractiveObject) (this.gameObjects.get(i))).isActive())) {
+      if ((gameObjects.get(i) instanceof InteractiveObject)
+          && !(((InteractiveObject) (this.gameObjects.get(i))).isActive())) {
         gameObjects.remove(i);
         i--;
       }
     }
 
-  }
+  } // draw ends
 
   /**
    * Operates each time the mouse is pressed
    */
-  @Override
-  public void mousePressed() {
+  @Override public void mousePressed() {
     //declaring local variables
     int i; //loop control variable
-    // TODO traverse the list of gameObjects and call mousePressed() method of each object stored in
+    // TODO traverse the list of gameObjects and call mousePressed() method of each object
+    //  stored in
     // the list
     for (i = 0; i < this.gameObjects.size(); i++) {
       //Iterating through every gameObjects element and calling the mousePressed() method of
@@ -166,13 +183,12 @@ public class TreasureHunt extends PApplet {
     }
     //TODO: check with instructor if this implementation is right since mousePressed is a call
     // back method which should not be called explicitly
-  }
+  } // mousePressed ends
 
   /**
    * Operates each time the mouse is released
    */
-  @Override
-  public void mouseReleased() {
+  @Override public void mouseReleased() {
     //declaring local variables
     int i; //loop control variable
     // TODO traverse the list of gameObjects and call mouseReleased() method of each object stored
@@ -184,8 +200,17 @@ public class TreasureHunt extends PApplet {
     }
     //TODO: check with instructor if this implementation is right since mouseReleased is a call
     // back method which should not be called explicitly
-  }
+  } // mouseReleased ends
 
+  /**
+   * Helper method to retrieve the reference to the iteractive object whose name matches the name
+   * passed as input from the gameObjects list names (case-sensitive comparison). If multiple
+   * objects have that name, this method will return the first (lowest-index) reference found.
+   *
+   * @param name is the name of the object that is to be found
+   * @return (InteractiveObject) a reference to an interactive object with the specified name, or
+   * null when none is found
+   */
   protected InteractiveObject findObjectByName(String name) {
     // Declaring local variables
     InteractiveObject foundObjRef = null;
@@ -194,16 +219,18 @@ public class TreasureHunt extends PApplet {
     // Running a for loop to iterate through each Object in the gameObjects ArrayList
     for (i = 0; i < this.gameObjects.size(); i++) {
       //Checking if object at index i has the same name as the parameter name
-      if ( gameObjects.get(i) instanceof InteractiveObject &&  ((InteractiveObject) gameObjects.get(i)).hasName(name)) {
+      if (gameObjects.get(i) instanceof InteractiveObject && ((InteractiveObject) gameObjects.get(
+          i)).hasName(name)) {
         foundObjRef = (InteractiveObject) gameObjects.get(i);
         break;
       }
     }
     return foundObjRef;
-  }
+  } // findObjectByName ends
 
 
   // implementing loadGameSettings
+
   /**
    * This method loads a background image, prints out some introductory text, and then reads in a
    * set of interactive objects descriptions from a text file with the provided name. These
@@ -239,7 +266,7 @@ public class TreasureHunt extends PApplet {
 
         // fields are delimited by colons within a given line
         String[] parts = line.split(":");
-        if(parts.length < 5) {
+        if (parts.length < 5) {
           continue; // line mal-formatted
         }
         InteractiveObject newObject = null;
@@ -269,7 +296,7 @@ public class TreasureHunt extends PApplet {
       if (fin != null)
         fin.close();
     }
-  }
+  } // loadGameSettings ends
 
 
   /**
@@ -277,11 +304,11 @@ public class TreasureHunt extends PApplet {
    * strings within the provided parts array.
    *
    * @param parts contains the following strings in this order: - C: indicates that a
-   *              ClickableObject is being created - name: the name of the newly created interactive
-   *              object - x: the starting x position (as an int) for this object - y: the starting
-   *              y position (as an int) for this object - message: a string of text to display when
-   *              this object is clicked - name of the object to activate (optional): activates this
-   *              object when clicked
+   *              ClickableObject is being created - name: the name of the newly created
+   *              interactive object - x: the starting x position (as an int) for this object - y:
+   *              the starting y position (as an int) for this object - message: a string of text
+   *              to display when this object is clicked - name of the object to activate
+   *              (optional): activates this object when clicked
    * @return the newly created object
    */
   private InteractiveObject loadNewInteractiveObject(String[] parts) {
@@ -298,13 +325,12 @@ public class TreasureHunt extends PApplet {
       // create new clickable object
       if (activate != null) {
         return new InteractiveObject(name, x, y, message, activate);
-      }
-      else {
+      } else {
         System.out.println("WARNING: Failed to find an interactive object with name: " + name);
       }
     }
     return new InteractiveObject(name, x, y, message);
-  }
+  } // loadNewInteractiveObject ends
 
   /**
    * This method creates and returns a new DroppableObject based on the properties specified as
@@ -312,11 +338,10 @@ public class TreasureHunt extends PApplet {
    *
    * @param parts contains the following strings in this order: - D: indicates that a
    *              DroppableObject is being created - name: the name of the newly created droppable
-   *              object - x: the starting x position (as an int) for this object - y: the starting
-   *              y position (as an int) for this object - message: a string of text to display when
-   *              this object is dropped on target - name of the object to activate (optional):
-   *              activates this object when dropped on target
-   *
+   *              object - x: the starting x position (as an int) for this object - y: the
+   *              starting y position (as an int) for this object - message: a string of text to
+   *              display when this object is dropped on target - name of the object to activate
+   *              (optional): activates this object when dropped on target
    * @return the newly created droppable object
    */
   private DroppableObject loadNewDroppableObject(String[] parts) {
@@ -336,5 +361,4 @@ public class TreasureHunt extends PApplet {
     // create and return the new droppable object
     return new DroppableObject(name, x, y, message, dropTarget, activate);
   }
-
-}
+} // class ends
